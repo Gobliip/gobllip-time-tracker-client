@@ -2,9 +2,9 @@ package com.gobliip.chronos.client.config;
 
 import com.gobliip.chronos.client.TimeTrackerClient;
 import com.gobliip.chronos.client.retrofit.TimeTrackerResource;
-import com.gobliip.retrofit.support.InMemoryJWTTokenStore;
-import com.gobliip.retrofit.support.JWTTokenStore;
-import com.gobliip.retrofit.support.OAuthJWTTokenInterceptor;
+import com.gobliip.retrofit.oauth2.InMemoryJWTTokenStore;
+import com.gobliip.retrofit.oauth2.JWTTokenStore;
+import com.gobliip.retrofit.oauth2.OAuthJWTTokenInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;

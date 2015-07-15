@@ -1,4 +1,4 @@
-package com.gobliip.retrofit.support;
+package com.gobliip.retrofit.oauth2;
 
 import java.util.Optional;
 
