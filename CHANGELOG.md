@@ -1,5 +1,5 @@
 0.0.1
 ----
-- Start/Stop/Pause/Resume time tracking through the [auth-server] api
+- Start/Stop/Pause/Resume time tracking through the [time-tracker] api
 
-[auth-server]: https://github.com/Gobliip/auth-server
+[time-tracker]: https://github.com/Gobliip/time-tracker

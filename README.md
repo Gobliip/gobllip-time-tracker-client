@@ -4,4 +4,4 @@
 | -------------------- | ----------------------------- |
 | goblii.auth.endpoint | URL to the [time-tracker] api |
 
-[auth-server]: https://github.com/Gobliip/auth-server
+[time-tracker]: https://github.com/Gobliip/time-tracker
