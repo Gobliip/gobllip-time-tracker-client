@@ -40,6 +40,8 @@ public class TimeTrackerResourceTest {
             "\"status\":\"RUNNING\"" +
             "}";
 
+    private TimeTrackerResource timeTrackerResource;
+
     private ClientAndServer mockServer;
 
     @Before
@@ -52,9 +54,8 @@ public class TimeTrackerResourceTest {
         mockServer.stop();
     }
 
-
-    @Test
-    public void test_create() throws InterruptedException {
+    @Before
+    public void setTimeTrackerResource(){
         Gson gson = new GsonBuilder()
                 .create();
 
@@ -63,8 +64,11 @@ public class TimeTrackerResourceTest {
                 .setConverter(new GsonConverter(gson))
                 .build();
 
-        TimeTrackerResource serviceClient = restAdapter.create(TimeTrackerResource.class);
+        timeTrackerResource = restAdapter.create(TimeTrackerResource.class);
+    }
 
+    @Test
+    public void test_create() throws InterruptedException {
         HttpRequest getTracking = request()
                 .withMethod("GET")
                 .withPath("/");
@@ -72,14 +76,56 @@ public class TimeTrackerResourceTest {
                 .when(getTracking, Times.once())
                 .respond(response().withBody(CREATE_TRACKING_RESPONSE));
 
-        Tracking tracking = serviceClient.create();
+        Tracking tracking = timeTrackerResource.create();
 
         assertEquals(new Long(1), tracking.getId());
         assertEquals(Tracking.TrackingStatus.RUNNING, tracking.getStatus());
         assertEquals("admin", tracking.getOwner());
         assertNull(tracking.getEnd());
-        assertEquals(Instant.ofEpochSecond(1436922627,359000000), tracking.getStart().toInstant());
+        assertEquals(Instant.ofEpochSecond(1436922627, 359000000), tracking.getStart().toInstant());
 
         mockServer.verify(getTracking, VerificationTimes.once());
+    }
+
+    @Test
+    public void test_stop() throws InterruptedException {
+        HttpRequest stopTracking = request()
+                .withMethod("POST")
+                .withPath("/3568/stop");
+        mockServer
+                .when(stopTracking, Times.once())
+                .respond(response().withBody(CREATE_TRACKING_RESPONSE));
+
+        timeTrackerResource.stop(new Long(3568));
+
+        mockServer.verify(stopTracking, VerificationTimes.once());
+    }
+
+    @Test
+    public void test_pause() throws InterruptedException {
+        HttpRequest pauseTracking = request()
+                .withMethod("POST")
+                .withPath("/568/pause");
+        mockServer
+                .when(pauseTracking, Times.once())
+                .respond(response().withBody(CREATE_TRACKING_RESPONSE));
+
+        timeTrackerResource.pause(new Long(568));
+
+        mockServer.verify(pauseTracking, VerificationTimes.once());
+    }
+
+    @Test
+    public void test_resume() throws InterruptedException {
+        HttpRequest resumeTracking = request()
+                .withMethod("POST")
+                .withPath("/678/resume");
+        mockServer
+                .when(resumeTracking, Times.once())
+                .respond(response().withBody(CREATE_TRACKING_RESPONSE));
+
+        timeTrackerResource.resume(new Long(678));
+
+        mockServer.verify(resumeTracking, VerificationTimes.once());
     }
 }
