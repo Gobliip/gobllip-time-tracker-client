@@ -16,6 +16,8 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <spring.cloud.commons.version>1.0.2.RELEASE</spring.cloud.commons.version>
+        <retrofit.cloud.version>0.0.1-RELEASE</retrofit.cloud.version>
     </properties>
 
     <dependencies>
@@ -23,13 +25,26 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.squareup.retrofit</groupId>
             <artifactId>retrofit</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.gobliip.retrofit.cloud</groupId>
+            <artifactId>retrofit-cloud</artifactId>
+            <version>${retrofit.cloud.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-commons</artifactId>
+            <version>${spring.cloud.commons.version}</version>
         </dependency>
 
         <dependency>
