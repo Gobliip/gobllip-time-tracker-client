@@ -11,19 +11,21 @@ import retrofit.http.Path;
  */
 public interface TimeTrackerResource {
 
-    @GET("/")
+    public static final String BASE_URL = "/trackings";
+
+    @GET(BASE_URL)
     @Headers("Accept: application/json")
     Tracking create();
 
-    @POST("/{trackingId}/resume")
+    @POST(BASE_URL + "/{trackingId}/resume")
     @Headers("Accept: application/json")
     Tracking resume(@Path("trackingId") Long trackingId);
 
-    @POST("/{trackingId}/pause")
+    @POST(BASE_URL + "/{trackingId}/pause")
     @Headers("Accept: application/json")
     Tracking pause(@Path("trackingId") Long trackingId);
 
-    @POST("/{trackingId}/stop")
+    @POST(BASE_URL + "/{trackingId}/stop")
     @Headers("Accept: application/json")
     Tracking stop(@Path("trackingId") Long trackingId);
 

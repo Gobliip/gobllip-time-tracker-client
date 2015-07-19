@@ -71,7 +71,7 @@ public class TimeTrackerResourceTest {
     public void test_create() throws InterruptedException {
         HttpRequest getTracking = request()
                 .withMethod("GET")
-                .withPath("/");
+                .withPath("/trackings");
         mockServer
                 .when(getTracking, Times.once())
                 .respond(response().withBody(CREATE_TRACKING_RESPONSE));
@@ -91,7 +91,7 @@ public class TimeTrackerResourceTest {
     public void test_stop() throws InterruptedException {
         HttpRequest stopTracking = request()
                 .withMethod("POST")
-                .withPath("/3568/stop");
+                .withPath("/trackings/3568/stop");
         mockServer
                 .when(stopTracking, Times.once())
                 .respond(response().withBody(CREATE_TRACKING_RESPONSE));
@@ -105,7 +105,7 @@ public class TimeTrackerResourceTest {
     public void test_pause() throws InterruptedException {
         HttpRequest pauseTracking = request()
                 .withMethod("POST")
-                .withPath("/568/pause");
+                .withPath("/trackings/568/pause");
         mockServer
                 .when(pauseTracking, Times.once())
                 .respond(response().withBody(CREATE_TRACKING_RESPONSE));
@@ -119,7 +119,7 @@ public class TimeTrackerResourceTest {
     public void test_resume() throws InterruptedException {
         HttpRequest resumeTracking = request()
                 .withMethod("POST")
-                .withPath("/678/resume");
+                .withPath("/trackings/678/resume");
         mockServer
                 .when(resumeTracking, Times.once())
                 .respond(response().withBody(CREATE_TRACKING_RESPONSE));
