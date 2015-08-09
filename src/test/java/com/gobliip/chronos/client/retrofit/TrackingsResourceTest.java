@@ -1,34 +1,36 @@
 package com.gobliip.chronos.client.retrofit;
 
 import com.gobliip.chronos.client.model.Tracking;
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockserver.client.server.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
+import org.mockserver.junit.MockServerRule;
 import org.mockserver.matchers.Times;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.verify.VerificationTimes;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedString;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created by lsamayoa on 14/07/15.
  */
-public class TimeTrackerResourceTest {
-
+public class TrackingsResourceTest {
+    private static final int MOCKSERVER_TIME_TO_BREATH = 5000; //ms
     private static final String CREATE_TRACKING_RESPONSE= "{" +
             "\"id\":1," +
             "\"owner\":\"admin\"," +
@@ -40,19 +42,12 @@ public class TimeTrackerResourceTest {
             "\"status\":\"RUNNING\"" +
             "}";
 
-    private TimeTrackerResource timeTrackerResource;
+    private TrackingsResource trackingsResource;
 
-    private ClientAndServer mockServer;
+    @Rule
+    public MockServerRule mockServerRule = new MockServerRule(1080, this);
 
-    @Before
-    public void startProxy() {
-        mockServer = startClientAndServer(1080);
-    }
-
-    @After
-    public void stopProxy() {
-        mockServer.stop();
-    }
+    private MockServerClient mockServer;
 
     @Before
     public void setTimeTrackerResource(){
@@ -64,19 +59,18 @@ public class TimeTrackerResourceTest {
                 .setConverter(new GsonConverter(gson))
                 .build();
 
-        timeTrackerResource = restAdapter.create(TimeTrackerResource.class);
+        trackingsResource = restAdapter.create(TrackingsResource.class);
     }
 
     @Test
     public void test_create() throws InterruptedException {
         HttpRequest getTracking = request()
-                .withMethod("GET")
+                .withMethod("POST")
                 .withPath("/trackings");
         mockServer
                 .when(getTracking, Times.once())
                 .respond(response().withBody(CREATE_TRACKING_RESPONSE));
-
-        Tracking tracking = timeTrackerResource.create();
+        Tracking tracking = trackingsResource.create(new TypedByteArray(null, new byte[]{}), new TypedString(""));
 
         assertEquals(new Long(1), tracking.getId());
         assertEquals(Tracking.TrackingStatus.RUNNING, tracking.getStatus());
@@ -85,6 +79,7 @@ public class TimeTrackerResourceTest {
         assertEquals(Instant.ofEpochSecond(1436922627, 359000000), tracking.getStart().toInstant());
 
         mockServer.verify(getTracking, VerificationTimes.once());
+        Thread.sleep(MOCKSERVER_TIME_TO_BREATH);
     }
 
     @Test
@@ -96,9 +91,11 @@ public class TimeTrackerResourceTest {
                 .when(stopTracking, Times.once())
                 .respond(response().withBody(CREATE_TRACKING_RESPONSE));
 
-        timeTrackerResource.stop(new Long(3568));
+
+        trackingsResource.stop(new Long(3568), new TypedByteArray(null, new byte[]{}), new TypedString(""));
 
         mockServer.verify(stopTracking, VerificationTimes.once());
+        Thread.sleep(MOCKSERVER_TIME_TO_BREATH);
     }
 
     @Test
@@ -110,9 +107,10 @@ public class TimeTrackerResourceTest {
                 .when(pauseTracking, Times.once())
                 .respond(response().withBody(CREATE_TRACKING_RESPONSE));
 
-        timeTrackerResource.pause(new Long(568));
+        trackingsResource.pause(new Long(568), new TypedByteArray(null, new byte[]{}), new TypedString(""));
 
         mockServer.verify(pauseTracking, VerificationTimes.once());
+        Thread.sleep(MOCKSERVER_TIME_TO_BREATH);
     }
 
     @Test
@@ -124,8 +122,9 @@ public class TimeTrackerResourceTest {
                 .when(resumeTracking, Times.once())
                 .respond(response().withBody(CREATE_TRACKING_RESPONSE));
 
-        timeTrackerResource.resume(new Long(678));
+        trackingsResource.resume(new Long(678), new TypedByteArray(null, new byte[]{}), new TypedString(""));
 
         mockServer.verify(resumeTracking, VerificationTimes.once());
+        Thread.sleep(MOCKSERVER_TIME_TO_BREATH);
     }
 }

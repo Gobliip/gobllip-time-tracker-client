@@ -1,7 +1,8 @@
 package com.gobliip.chronos.client.config;
 
 import com.gobliip.chronos.client.TimeTrackerClient;
-import com.gobliip.chronos.client.retrofit.TimeTrackerResource;
+import com.gobliip.chronos.client.retrofit.TrackingsResource;
+import com.gobliip.chronos.client.retrofit.WorkTrackerResource;
 import com.gobliip.retrofit.cloud.endpoint.RoundRobinEndpoint;
 import com.gobliip.retrofit.cloud.oauth2.jwt.InMemoryJWTTokenStore;
 import com.gobliip.retrofit.cloud.oauth2.jwt.JWTTokenStore;
@@ -40,12 +41,13 @@ public class TimeTrackerClientConfig {
     private DiscoveryClient discoveryClient;
 
     @Bean
-    public TimeTrackerClient timeTrackerClient(){
-        return new TimeTrackerClient(timeTrackerResource());
+    public WorkTrackerResource workTrackerResource(){
+        return restAdapter().create(WorkTrackerResource.class);
     }
 
-    public TimeTrackerResource timeTrackerResource(){
-        return restAdapter().create(TimeTrackerResource.class);
+    @Bean
+    public TrackingsResource timeTrackerResource(){
+        return restAdapter().create(TrackingsResource.class);
     }
 
     @Bean

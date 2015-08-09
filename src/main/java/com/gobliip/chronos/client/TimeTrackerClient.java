@@ -1,18 +1,15 @@
 package com.gobliip.chronos.client;
 
-import com.gobliip.chronos.client.model.Tracking;
-import com.gobliip.chronos.client.retrofit.TimeTrackerResource;
-
-import java.util.Optional;
+import com.gobliip.chronos.client.retrofit.TrackingsResource;
 
 /**
  * Created by lsamayoa on 7/14/15.
  */
 public class TimeTrackerClient {
 
-    private TimeTrackerResource timeTrackerResource;
+    private TrackingsResource timeTrackerResource;
 
-    public TimeTrackerClient(TimeTrackerResource timeTrackerResource) {
+    public TimeTrackerClient(TrackingsResource timeTrackerResource) {
         this.timeTrackerResource = timeTrackerResource;
     }
 }
