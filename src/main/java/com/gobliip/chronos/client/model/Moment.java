@@ -1,5 +1,7 @@
 package com.gobliip.chronos.client.model;
 
+import java.util.List;
+
 /**
  * Created by lsamayoa on 19/07/15.
  */
@@ -19,6 +21,7 @@ public class Moment {
     private MomentType type;
     private Instant createdAt;
     private Instant updatedAt;
+    private List<Attachment> attachments;
 
     public Long getId() {
         return id;
@@ -74,5 +77,13 @@ public class Moment {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
     }
 }

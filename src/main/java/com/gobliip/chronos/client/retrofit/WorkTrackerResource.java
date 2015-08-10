@@ -43,8 +43,7 @@ public interface WorkTrackerResource {
                   @Part("memo") final TypedString memo);
     @Multipart
     @POST(BASE_URL + "/log")
-    WorkSession log(@Path("workSessionId") final Long trackingId,
-                   @Part("attachment") final TypedByteArray attachment,
+    WorkSession log(@Part("attachment") final TypedByteArray attachment,
                    @Part("mouseActions") final int mouseActions,
                    @Part("keyboardActions") final int keyboardActions,
                    @Part("memo") final TypedString memo);

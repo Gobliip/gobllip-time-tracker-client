@@ -1,6 +1,6 @@
 package com.gobliip.chronos.client.config;
 
-import com.gobliip.chronos.client.TimeTrackerClient;
+import com.gobliip.chronos.client.retrofit.AttachmentsResource;
 import com.gobliip.chronos.client.retrofit.TrackingsResource;
 import com.gobliip.chronos.client.retrofit.WorkTrackerResource;
 import com.gobliip.retrofit.cloud.endpoint.RoundRobinEndpoint;
@@ -39,6 +39,11 @@ public class TimeTrackerClientConfig {
 
     @Autowired(required = false)
     private DiscoveryClient discoveryClient;
+
+    @Bean
+    public AttachmentsResource attachmentsResource(){
+        return restAdapter().create(AttachmentsResource.class);
+    }
 
     @Bean
     public WorkTrackerResource workTrackerResource(){
